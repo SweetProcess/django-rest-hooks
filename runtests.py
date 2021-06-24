@@ -6,10 +6,6 @@ from django.conf import settings
 
 
 APP_NAME = "rest_hooks"
-if django.VERSION < (1, 8):
-    comments = "django.contrib.comments"
-else:
-    comments = "django_comments"
 
 settings.configure(
     DEBUG=True,
@@ -34,7 +30,7 @@ settings.configure(
         "django.contrib.sessions",
         "django.contrib.admin",
         "django.contrib.sites",
-        comments,
+        "django_comments",
         APP_NAME,
     ),
 )

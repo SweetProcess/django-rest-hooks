@@ -1,19 +1,10 @@
 import django
 
-try:
-    from django.apps import apps as django_apps
-except ImportError:
-    django_apps = None
+from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 
-if django.VERSION >= (
-    2,
-    0,
-):
-    get_model_kwargs = {"require_ready": False}
-else:
-    get_model_kwargs = {}
+get_model_kwargs = {"require_ready": False}
 
 
 def get_module(path):
@@ -23,10 +14,7 @@ def get_module(path):
 
         slugify = get_module('django.template.defaultfilters.slugify')
     """
-    try:
-        from importlib import import_module
-    except ImportError as e:
-        from django.utils.importlib import import_module
+    from importlib import import_module
 
     try:
         mod_name, func_name = path.rsplit(".", 1)
@@ -54,47 +42,28 @@ def get_hook_model():
     otherwise the default Hook model.
     """
     model_label = getattr(settings, "HOOK_CUSTOM_MODEL", None)
-    if django_apps:
-        model_label = (model_label or "rest_hooks.Hook").replace(".models.", ".")
-        try:
-            return django_apps.get_model(model_label, **get_model_kwargs)
-        except ValueError:
-            raise ImproperlyConfigured(
-                "HOOK_CUSTOM_MODEL must be of the form 'app_label.model_name'"
-            )
-        except LookupError:
-            raise ImproperlyConfigured(
-                "HOOK_CUSTOM_MODEL refers to model '%s' that has not been installed"
-                % model_label
-            )
-    else:
-        if model_label in (None, "rest_hooks.Hook"):
-            from rest_hooks.models import Hook
-
-            HookModel = Hook
-        else:
-            try:
-                HookModel = get_module(settings.HOOK_CUSTOM_MODEL)
-            except ImportError:
-                raise ImproperlyConfigured(
-                    "HOOK_CUSTOM_MODEL refers to model '%s' that cannot be imported"
-                    % model_label
-                )
-        return HookModel
+    model_label = (model_label or "rest_hooks.Hook").replace(".models.", ".")
+    try:
+        return django_apps.get_model(model_label, **get_model_kwargs)
+    except ValueError:
+        raise ImproperlyConfigured(
+            "HOOK_CUSTOM_MODEL must be of the form 'app_label.model_name'"
+        )
+    except LookupError:
+        raise ImproperlyConfigured(
+            "HOOK_CUSTOM_MODEL refers to model '%s' that has not been installed"
+            % model_label
+        )
 
 
 def find_and_fire_hook(event_name, instance, user_override=None, payload_override=None):
     """
     Look up Hooks that apply
     """
-    try:
-        from django.contrib.auth import get_user_model
-
-        User = get_user_model()
-    except ImportError:
-        from django.contrib.auth.models import User
+    from django.contrib.auth import get_user_model
     from rest_hooks.models import HOOK_EVENTS
 
+    User = get_user_model()
     if event_name not in HOOK_EVENTS.keys():
         raise Exception(
             '"{}" does not exist in `settings.HOOK_EVENTS`.'.format(event_name)

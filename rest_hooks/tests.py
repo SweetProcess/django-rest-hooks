@@ -1,29 +1,16 @@
+import json
 import requests
 import time
 from mock import patch, MagicMock, ANY
 
 from datetime import datetime
 
-try:
-    # Django <= 1.6 backwards compatibility
-    from django.utils import simplejson as json
-except ImportError:
-    # Django >= 1.7
-    import json
-
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.test import TestCase
 from django.test.utils import override_settings
 
-try:
-    from django.contrib.comments.models import Comment
-
-    comments_app_label = "comments"
-except ImportError:
-    from django_comments.models import Comment
-
-    comments_app_label = "django_comments"
+from django_comments.models import Comment
 
 from rest_hooks import models
 from rest_hooks import signals
@@ -31,6 +18,8 @@ from rest_hooks.admin import HookForm
 
 Hook = models.Hook
 
+
+comments_app_label = "django_comments"
 
 urlpatterns = []
 HOOK_EVENTS_OVERRIDE = {
