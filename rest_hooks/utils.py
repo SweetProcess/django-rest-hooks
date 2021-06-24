@@ -44,7 +44,7 @@ def get_hook_model():
     model_label = getattr(settings, "HOOK_CUSTOM_MODEL", None)
     model_label = (model_label or "rest_hooks.Hook").replace(".models.", ".")
     try:
-        return django_apps.get_model(model_label, **get_model_kwargs)
+        return apps.get_model(model_label, **get_model_kwargs)
     except ValueError:
         raise ImproperlyConfigured(
             "HOOK_CUSTOM_MODEL must be of the form 'app_label.model_name'"

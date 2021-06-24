@@ -16,10 +16,23 @@ settings.configure(
     },
     USE_TZ=True,
     ROOT_URLCONF="{0}.tests".format(APP_NAME),
-    MIDDLEWARE_CLASSES=(
+    MIDDLEWARE=(
         "django.contrib.sessions.middleware.SessionMiddleware",
         "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
     ),
+    TEMPLATES=[
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.contrib.auth.context_processors.auth",
+                    "django.contrib.messages.context_processors.messages",
+                ]
+            },
+        },
+    ],
     SECRET_KEY="hunter2",
     SITE_ID=1,
     HOOK_EVENTS={},
@@ -29,6 +42,7 @@ settings.configure(
         "django.contrib.contenttypes",
         "django.contrib.sessions",
         "django.contrib.admin",
+        "django.contrib.messages",
         "django.contrib.sites",
         "django_comments",
         APP_NAME,
