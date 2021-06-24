@@ -5,35 +5,35 @@ import django
 from django.conf import settings
 
 
-APP_NAME = 'rest_hooks'
+APP_NAME = "rest_hooks"
 if django.VERSION < (1, 8):
-    comments = 'django.contrib.comments'
+    comments = "django.contrib.comments"
 else:
-    comments = 'django_comments'
+    comments = "django_comments"
 
 settings.configure(
     DEBUG=True,
     DATABASES={
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
         }
     },
     USE_TZ=True,
-    ROOT_URLCONF='{0}.tests'.format(APP_NAME),
+    ROOT_URLCONF="{0}.tests".format(APP_NAME),
     MIDDLEWARE_CLASSES=(
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
     ),
     SECRET_KEY="hunter2",
     SITE_ID=1,
     HOOK_EVENTS={},
     HOOK_THREADING=False,
     INSTALLED_APPS=(
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.admin',
-        'django.contrib.sites',
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.admin",
+        "django.contrib.sites",
         comments,
         APP_NAME,
     ),
@@ -41,7 +41,7 @@ settings.configure(
 
 from django.test.utils import get_runner
 
-if hasattr(django, 'setup'):
+if hasattr(django, "setup"):
     django.setup()
 TestRunner = get_runner(settings)
 test_runner = TestRunner()
