@@ -23,7 +23,7 @@ class DeliverHook(Task):
         response = requests.post(
             url=target,
             data=json.dumps(payload, cls=DjangoJSONEncoder),
-            headers={'Content-Type': 'application/json'}
+            headers={"Content-Type": "application/json"},
         )
 
         if response.status_code == 410 and hook_id:
@@ -33,7 +33,8 @@ class DeliverHook(Task):
 
         # would be nice to log this, at least for a little while...
 
+
 def deliver_hook_wrapper(target, payload, instance=None, hook=None, **kwargs):
     if hook:
-        kwargs['hook_id'] = hook.id
+        kwargs["hook_id"] = hook.id
     return DeliverHook.delay(target, payload, **kwargs)

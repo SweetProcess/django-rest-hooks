@@ -5,14 +5,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('rest_hooks', '0001_initial'),
+        ("rest_hooks", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='Hook',
+            name="Hook",
             options={
-                'swappable': 'HOOK_CUSTOM_MODEL',
+                "swappable": "HOOK_CUSTOM_MODEL",
             },
         ),
     ]
