@@ -24,6 +24,7 @@ settings.configure(
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
     ),
+    SECRET_KEY="hunter2",
     SITE_ID=1,
     HOOK_EVENTS={},
     HOOK_THREADING=False,
