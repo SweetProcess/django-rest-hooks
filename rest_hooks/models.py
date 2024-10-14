@@ -3,7 +3,6 @@ import json
 
 import requests
 
-import django
 from django.conf import settings
 from django.core import serializers
 from django.core.exceptions import ValidationError, ImproperlyConfigured
@@ -16,9 +15,7 @@ from django.dispatch import receiver
 from rest_hooks.signals import hook_event, raw_hook_event, hook_sent_event
 from rest_hooks.utils import (
     distill_model_event,
-    get_hook_model,
     get_module,
-    find_and_fire_hook,
 )
 
 
@@ -157,14 +154,12 @@ class AbstractHook(models.Model):
         return None
 
     def __unicode__(self):
-        return u"{} => {}".format(self.event, self.target)
+        return "{} => {}".format(self.event, self.target)
 
 
 class Hook(AbstractHook):
-    if django.VERSION >= (1, 7):
-
-        class Meta(AbstractHook.Meta):
-            swappable = "HOOK_CUSTOM_MODEL"
+    class Meta(AbstractHook.Meta):
+        swappable = "HOOK_CUSTOM_MODEL"
 
 
 ##############

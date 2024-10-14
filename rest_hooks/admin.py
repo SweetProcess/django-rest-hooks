@@ -30,12 +30,10 @@ class HookForm(forms.ModelForm):
         return [(x, x) for x in getattr(settings, "HOOK_EVENTS", None).keys()]
 
 
+@admin.register(HookModel)
 class HookAdmin(admin.ModelAdmin):
     list_display = [f.name for f in HookModel._meta.fields]
     raw_id_fields = [
         "user",
     ]
     form = HookForm
-
-
-admin.site.register(HookModel, HookAdmin)
