@@ -288,7 +288,6 @@ class RESTHooksTest(TestCase):
         )
 
     def test_valid_form(self):
-
         form_data = {
             "user": self.user.id,
             "target": "http://example.com",

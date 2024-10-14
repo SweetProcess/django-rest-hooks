@@ -154,11 +154,10 @@ class AbstractHook(models.Model):
         return None
 
     def __unicode__(self):
-        return u"{} => {}".format(self.event, self.target)
+        return "{} => {}".format(self.event, self.target)
 
 
 class Hook(AbstractHook):
-
     class Meta(AbstractHook.Meta):
         swappable = "HOOK_CUSTOM_MODEL"
 
