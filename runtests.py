@@ -14,6 +14,7 @@ settings.configure(
             "ENGINE": "django.db.backends.sqlite3",
         }
     },
+    DEFAULT_AUTO_FIELD="django.db.models.AutoField",
     USE_TZ=True,
     ROOT_URLCONF="{0}.tests".format(APP_NAME),
     MIDDLEWARE=(
@@ -27,6 +28,8 @@ settings.configure(
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
+                    "django.template.context_processors.debug",
+                    "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
                     "django.contrib.messages.context_processors.messages",
                 ]

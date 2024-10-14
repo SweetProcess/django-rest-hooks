@@ -79,7 +79,8 @@ class RESTHooksTest(TestCase):
         with self.assertRaises(Exception):
             models.find_and_fire_hook("some.fake.event", self.user)
 
-        models.find_and_fire_hook("special.thing", self.user)
+        with self.assertRaises(Exception):
+            models.find_and_fire_hook("special.thing", self.user)
 
     def test_no_hook(self):
         comment = Comment.objects.create(
